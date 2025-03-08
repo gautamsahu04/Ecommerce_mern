@@ -4,6 +4,7 @@ import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { prices } from "../components/Price";
 import { TbCurrencyRupee } from "react-icons/tb";
+import {  useNavigate } from "react-router";
 
 const Homepage = () => {
   const [products, setProducts] = useState([]);
@@ -13,6 +14,7 @@ const Homepage = () => {
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState("")
+  const navigate = useNavigate()
 
   const loadMore = async () => {
     try {
@@ -166,7 +168,7 @@ const Homepage = () => {
               
                   {/* Buttons Section */}
                   <div className="mt-4 flex flex-col sm:flex-row gap-3">
-                    <button className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
+                    <button className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg" onClick={()=>{navigate(`/product/${p.slug}`)}}> 
                       More Details
                     </button>
                     <button className="w-full py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg">

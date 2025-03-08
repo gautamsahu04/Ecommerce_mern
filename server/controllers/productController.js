@@ -191,7 +191,7 @@ export const countProductController = async (req, res) => {
   try {
     
     const total = await productModel.estimatedDocumentCount();
-    console.log(total)
+    // console.log(total)
     res.status(200).send({ total, success: true });
   } catch (error) {
     console.log(error);
@@ -223,3 +223,39 @@ export const ProductListController = async (req, res) => {
     res.status(500).send({ message: "Error in per page ", success: false });
   }
 };
+
+
+//  search product 
+export const searchProductController = async (req,res) => {
+  try {
+    const {keyword} = req.params
+    const products = await productModel.find({
+      $or: [
+        { name: { $regex: keyword, $options: 'i' } },
+        { description: { $regex: keyword, $options: 'i' } },
+
+      ]
+    }).select("-photo")
+    res.status(200).json({products, success: true})
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Error in searching the product  ", success: false });
+    
+  }
+  
+}
+//  similar product
+export const relatedProductController = async (req,res) => {
+  const { pid, cid } = req.params;
+  try {
+    const products = await productModel.find({
+      category: cid,
+      _id: { $ne: pid },  // ne - not include 
+    }).limit(3).select("-photo").populate("category"); 
+    res.status(200).send({success:true, products });
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching similar products" });
+  }
+  
+}

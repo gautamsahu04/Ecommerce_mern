@@ -5,6 +5,7 @@ const Contact = () => {
   return (
     <Layout title={"contact"}>
         <h3>Contact</h3>
+        
     </Layout>
   )
 }

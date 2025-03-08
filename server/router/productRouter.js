@@ -1,6 +1,6 @@
 import express from "express"
 import { isadmin, requireSignIn } from "../middlewares/authmiddlewares.js"
-import { countProductController, createProductController, deleteProduct, getAllProductsController, productFilterCOntroller, ProductListController, productPhotoController, singleproduct, updateProductController } from "../controllers/productController.js"
+import { countProductController, createProductController, deleteProduct, getAllProductsController, productFilterCOntroller, ProductListController, productPhotoController, relatedProductController, searchProductController, singleproduct, updateProductController } from "../controllers/productController.js"
 import formidable from "express-formidable"
 const router = express.Router()
 
@@ -18,6 +18,9 @@ router.post("/filter-product",productFilterCOntroller)
 router.get("/count-product",countProductController)
 // product per page
 router.get("/product-list/:page",ProductListController)
+// search controller
+router.get("/search/:keyword",searchProductController)
+router.get("/related-product/:pid/:cid", relatedProductController)
 
 
 

@@ -3,6 +3,7 @@ import { NavLink, Link, Navigate } from "react-router-dom";
 import { RiShoppingBagFill } from "react-icons/ri";
 import { useAuth } from "../context/Auth";
 import toast from "react-hot-toast";
+import SearchInput from "./Form/SearchInput";
 
 const Header = () => {
   const [Auth, setAuth] = useAuth();
@@ -32,6 +33,7 @@ const Header = () => {
 
           {/* Navigation Links */}
           <ul className="flex space-x-6 text-lg font-medium items-center">
+              <SearchInput/>
             <li>
               <NavLink to="/" className="hover:text-blue-600 transition">
                 HOME
