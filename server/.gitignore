@@ -1,0 +1,16 @@
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+# Environment variables
+.env
+
+# Build & Logs
+dist/
+build/
+.log
+logs/
+npm-debug.log*
+
+# VS Code settings
+.vscode/

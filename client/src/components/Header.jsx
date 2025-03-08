@@ -4,11 +4,15 @@ import { RiShoppingBagFill } from "react-icons/ri";
 import { useAuth } from "../context/Auth";
 import toast from "react-hot-toast";
 import SearchInput from "./Form/SearchInput";
+import useCategory from "./Hooks/useCategory";
 
 const Header = () => {
   const [Auth, setAuth] = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [categoryDropDown, setcategoryDropDown] = useState(false);
+  const categories = useCategory();
 
+  // console.log(categories);
   const handleLogout = () => {
     setAuth({
       ...Auth,
@@ -33,11 +37,37 @@ const Header = () => {
 
           {/* Navigation Links */}
           <ul className="flex space-x-6 text-lg font-medium items-center">
-              <SearchInput/>
+            <SearchInput />
             <li>
               <NavLink to="/" className="hover:text-blue-600 transition">
                 HOME
               </NavLink>
+            </li>
+            <li className="relative">
+              <button
+                onClick={() => setcategoryDropDown(!categoryDropDown)}
+                className="hover:text-blue-600 transition"
+              >
+                CATEGORIES ▼
+              </button>
+
+              {categoryDropDown && (
+                <ul className="absolute right-0 mt-2 bg-white shadow-md rounded w-40 p-2 z-50">
+                  <li 
+                  className="px-2 py-1    hover:bg-gray-100 cursor-pointer"
+                  >
+                  <Link to={`/all-categories`}>All categories</Link>
+                  </li>
+                  {categories?.map((c) => (
+                    <li
+                      key={c._id}
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <Link to={`/category/${c.slug}`}>{c.name}</Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
 
             {!Auth.user ? (

@@ -19,6 +19,8 @@ import Products from "./pages/Admin/Products.jsx";
 import UpdateProduct from "./pages/Admin/UpdateProduct.jsx";
 import Search from "./pages/Search.jsx";
 import ProductDetail from "./pages/ProductDetail.jsx"
+import Categories from "./pages/Categories.jsx";
+import CategoryProduct from "./pages/CategoryProduct.jsx";
 // import PrivateRoute from "./components/Routes/private.js";
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
       <Route path="/" element={<Homepage />} />
       <Route path="/search" element={<Search />} />
       <Route path="/product/:slug" element={<ProductDetail />} />
+      <Route path="/all-categories" element={<Categories />} />
+      <Route path="/category/:slug" element={<CategoryProduct />} />
       
       <Route path="/dashboard" element={<PrivateRoute />}>
         <Route path="user" element={<Dashboard />} />

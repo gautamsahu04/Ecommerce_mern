@@ -1,5 +1,6 @@
 import slugify from "slugify";
 import productModel from "../models/productModel.js";
+import categoryModel from "../models/categoryModel.js"
 import fs from "fs";
 
 // create product
@@ -208,7 +209,7 @@ export const countProductController = async (req, res) => {
 //  product list based on page
 export const ProductListController = async (req, res) => {
   try {
-    const perpage = 6;
+    const perpage = 3;
     const page = req.params.page ? req.params.page : 1;
     const skip = (page - 1) * perpage;
     const products = await productModel
@@ -259,3 +260,23 @@ export const relatedProductController = async (req,res) => {
   }
   
 }
+
+// Get product by category 
+export const productCategoryController = async (req,res) => {
+  try {
+    const { slug } = req.params;
+    const category = await categoryModel.findOne({slug})
+    const products = await productModel.find({ category}).populate("category")
+    res.status(200).send({success:true, products,category });
+    
+  } catch (error) {
+    res.status(500).json({ success:false, message:"getting error while fectching the product by category",error: "Error fetching products by category" });
+    
+  }
+  
+}
+
+
+
+
+
