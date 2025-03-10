@@ -21,6 +21,7 @@ import Search from "./pages/Search.jsx";
 import ProductDetail from "./pages/ProductDetail.jsx"
 import Categories from "./pages/Categories.jsx";
 import CategoryProduct from "./pages/CategoryProduct.jsx";
+import CartPage from "./pages/CartPage.jsx";
 // import PrivateRoute from "./components/Routes/private.js";
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
       <Route path="/product/:slug" element={<ProductDetail />} />
       <Route path="/all-categories" element={<Categories />} />
       <Route path="/category/:slug" element={<CategoryProduct />} />
+      <Route path="/cart" element={<CartPage />} />
       
       <Route path="/dashboard" element={<PrivateRoute />}>
         <Route path="user" element={<Dashboard />} />
@@ -45,6 +47,7 @@ function App() {
         <Route path="admin/Products/:slug" element={<UpdateProduct/>} />
         <Route path="admin/AllUsers" element={<AllUsers />} />
       </Route>
+      {/* public route  */}
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/about" element={<About />} />

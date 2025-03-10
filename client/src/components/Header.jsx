@@ -5,12 +5,15 @@ import { useAuth } from "../context/Auth";
 import toast from "react-hot-toast";
 import SearchInput from "./Form/SearchInput";
 import useCategory from "./Hooks/useCategory";
+import { useCart } from "../context/Card.jsx";
+import { Badge } from "antd";
 
 const Header = () => {
   const [Auth, setAuth] = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [categoryDropDown, setcategoryDropDown] = useState(false);
   const categories = useCategory();
+  const [cart] = useCart();
 
   // console.log(categories);
   const handleLogout = () => {
@@ -53,10 +56,8 @@ const Header = () => {
 
               {categoryDropDown && (
                 <ul className="absolute right-0 mt-2 bg-white shadow-md rounded w-40 p-2 z-50">
-                  <li 
-                  className="px-2 py-1    hover:bg-gray-100 cursor-pointer"
-                  >
-                  <Link to={`/all-categories`}>All categories</Link>
+                  <li className="px-2 py-1    hover:bg-gray-100 cursor-pointer">
+                    <Link to={`/all-categories`}>All categories</Link>
                   </li>
                   {categories?.map((c) => (
                     <li
@@ -124,9 +125,11 @@ const Header = () => {
             )}
 
             <li>
-              <NavLink to="/cart" className="hover:text-blue-600 transition">
-                CART(0)
-              </NavLink>
+              <Badge count={cart?.length} >
+                <NavLink to="/cart" className="hover:text-blue-600 transition text-xl ">
+                  CART
+                </NavLink>
+              </Badge>
             </li>
           </ul>
         </div>

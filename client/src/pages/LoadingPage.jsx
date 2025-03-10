@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 
+
 const LoadingPage = ({path="login"}) => {
   const [count, setcount] = useState(5);
   const Navigate = useNavigate();
