@@ -24,6 +24,9 @@ build/
 .DS_Store
 Thumbs.db
 
-# Production files
-*.env
+# Production files (SSL keys, config)
 *.pem
+
+# Optional: Ignore lock files (if not needed)
+# package-lock.json
+# yarn.lock

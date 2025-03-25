@@ -23,7 +23,7 @@ app.use("/api/category",categoryRouter )
 app.use("/api/product",productRouter) 
 
 // ................code for production...production...........
-if (process.env.NODE_ENV === "production") {
+if (process.env.DEV_MODE === "production") {
   const dirPath = path.resolve();
   app.use(express.static("./client/dist"));
   app.get("*", (req, res) => {
