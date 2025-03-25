@@ -32,6 +32,11 @@ if (process.env.DEV_MODE === "production") {
 }
 
 
+app.use(cors({
+  origin: "https://ecommerce-mern-6j9p.onrender.com/",
+  credentials: true,
+}));
+
 const port = process.env.PORT || 8080
 
 // database connection 
