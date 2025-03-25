@@ -12,7 +12,7 @@ const app = express()
 dotenv.config();
 app.use(cors())
 app.use(express.json())
-app.use(express.static(path.join(__dirname,"./client/build")))
+
 // app.use(express.urlencoded({ extended: true }))
 
 
@@ -22,13 +22,17 @@ app.use("/api/auth", authRouter)
 app.use("/api/category",categoryRouter )
 app.use("/api/product",productRouter) 
 
-app.use('*',function(req,res){
-  res.sendFile(path.join(__dirname,"./client/build/index.html"))
+// ................code for production...production...........
+if (process.env.NODE_ENV === "production") {
+  const dirPath = path.resolve();
+  app.use(express.static("./client/dist"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(dirPath, "./client/dist", "index.html"));
+  });
+}
 
-})
 
-
-const port = process.env.PORT
+const port = process.env.PORT || 8080
 
 // database connection 
 database();
