@@ -1,5 +1,5 @@
 import express from "express";
-import { isadmin, requireSignIn } from "../middlewares/authmiddlewares.js";
+import { isadmin, requireSignIn } from "../middlewares/authMiddlewares.js";
 
 import {
   countProductController,
