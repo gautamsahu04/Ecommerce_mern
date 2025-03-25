@@ -1,6 +1,6 @@
 import express from "express";
 import  {registerController, loginController, tokencheck } from "../controllers/authController.js"
-import { isadmin, requireSignIn } from "../middlewares/authmiddlewares.js";
+import { isadmin, requireSignIn } from "../middlewares/authMiddlewares.js";
 const router = express.Router()
 
 router.get("/test", (req,res)=>{
