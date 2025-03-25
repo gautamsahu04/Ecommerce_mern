@@ -4,20 +4,74 @@ import { useAuth } from "../context/Auth.jsx";
 import { useCart } from "../context/Card.jsx";
 import { TbCurrencyRupee } from "react-icons/tb";
 import { MdDeleteForever } from "react-icons/md";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import DropIn from "braintree-web-drop-in-react";
+import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 const CartPage = () => {
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
+  const [clientToken, setclientToken] = useState("");
+  const [instance, setInstance] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
+  // get client token
+  const getToken = async (req, res) => {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:3000/api/product/braintree/token"
+      );
+      setclientToken(data?.clientToken);
+      // console.log(clientToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getToken();
+  }, [auth?.token]);
+
+  //  payment  function
+  const handlePayment = async () => {
+    if (!instance) {
+      console.error("Braintree instance is not initialized.");
+      toast.error("Payment system is not ready. Try again.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const { nonce } = await instance.requestPaymentMethod();
+      console.log("Payment Nonce:", nonce);
+      const { data } = await axios.post(
+        "http://localhost:3000/api/product/braintree/payment",
+        {
+          nonce,
+          cart,
+        }
+      );
+      setLoading(false);
+      localStorage.removeItem("cart");
+      setCart([]);
+      navigate("/");
+      toast.success("order paymnet successfully");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+  // total price
   const totalPrice = () => {
     try {
       let subtotal = 0;
       cart?.map((item) => {
-        subtotal = subtotal + item.price ;
-        
+        subtotal = subtotal + item.price;
       });
-      
-      
+
       return subtotal.toLocaleString("en-IN", {
         style: "currency",
         currency: "INR",
@@ -54,13 +108,12 @@ const CartPage = () => {
             {/* Cart Items */}
             <div className="flex-1">
               {cart.map((p) => (
-                <div className="bg-white border rounded-lg p-4 mb-4 flex items-center justify-between">
+                <div
+                  className="bg-white border rounded-lg p-4 mb-4 flex items-center justify-between"
+                  key={p._id}
+                >
                   <div className="flex items-center">
-                    {/* <img
-                  src="https://placehold.co/100x100"
-                  alt="Gradient Graphic T-shirt"
-                  className="w-20 h-20 rounded-lg mr-4"
-                /> */}
+                   
                     <img
                       src={`http://localhost:3000/api/product/product-photo/${p._id}`}
                       alt={p.name}
@@ -101,34 +154,42 @@ const CartPage = () => {
               <h2 className="text-xl font-bold mb-4">
                 Order Summary | payment{" "}
               </h2>
+
               
-              {/* <div className="flex justify-between mb-2">
-                <span>Discount (-20%)</span>
-                <span className="font-bold text-red-500">-$113</span>
-              </div> */}
-              {/* <div className="flex justify-between mb-2">
-                <span>Delivery charge</span>
-                <span className="font-bold">100</span>
-              </div> */}
               <hr className="my-4" />
               <div className="flex justify-between mb-4">
                 <span className="text-xl font-bold">Total</span>
                 <span className="text-xl font-bold">{totalPrice()}</span>
               </div>
-              {/* <div className="flex items-center mb-4">
-              <input
-                type="text"
-                placeholder="Add promo code"
-                className="flex-1 border rounded-l-lg px-4 py-2"
-              />
-              <button className="bg-gray-200 text-black px-4 py-2 rounded-r-lg">
-                Apply
-              </button>
-            </div> */}
-              <button className="w-full bg-black text-white py-3 rounded-lg flex items-center justify-center">
+              
+              <div className="flex items-center mb-4">
+                {!clientToken || !cart?.length ? (
+                  ""
+                ) : (
+                  <>
+                    <DropIn
+                      options={{ authorization: clientToken }}
+                      
+                      onInstance={(instance) => {
+                        console.log(instance)
+                        setInstance(instance)
+                      }}
+                    />
+                    <button
+                      onClick={handlePayment}
+                      disabled={!instance || loading}
+                      className="btn btn-primary"
+                    >
+                      {loading ? "Processing..." : "Buy"}
+                    </button>
+                    
+                  </>
+                )}
+              </div>
+              {/* <button className="w-full bg-black text-white py-3 rounded-lg flex items-center justify-center">
                 <span>Go to Checkout</span>
                 <i className="fas fa-arrow-right ml-2"></i>
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -139,43 +200,3 @@ const CartPage = () => {
 
 export default CartPage;
 
-{
-  /* <div className="container">
-        <div className="row">
-          <div className="col-md-6 ">
-            <h1 className="text-center bg-light p-2">{`hello ${
-              auth?.token && auth?.user.name
-            }`}</h1>
-            <h4 className="text-center">
-              {cart.length > 1
-                ? ` you have ${cart.length} item in your cart ${
-                    auth?.token ? "" : "you have to loggedIN first"
-                  }  "" `
-                : "your Cart Is Empty"}
-            </h4>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-9">
-            {cart.map((p) => (
-              <div className="row">
-                <div className="col-md-6">
-                  <img
-                    src={`http://localhost:3000/api/product/product-photo/${p._id}`}
-                    alt={p.name}
-                    className="w-50 h-55 object-cover rounded-lg"
-                  />
-                </div>
-                <div className="col-md-6">
-                  {" "}
-                  <p className="text-gray-600 min-h-[40px]">
-                    {p.description.substring(0,50)}...
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="col-md-6">Checkout || payment</div>
-        </div>
-      </div> */
-}

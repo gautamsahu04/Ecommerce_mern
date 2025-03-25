@@ -1,5 +1,6 @@
 import express from "express";
 import { isadmin, requireSignIn } from "../middlewares/authmiddlewares.js";
+
 import {
   countProductController,
   createProductController,
@@ -13,9 +14,14 @@ import {
   searchProductController,
   singleproduct,
   updateProductController,
+  braintreeTokenController,
+  braintreePaymentController,
 } from "../controllers/productController.js";
 import formidable from "express-formidable";
 const router = express.Router();
+router.get("/test",(req,res)=>{
+  res.status(200).send(`Public Key: ${process.env.PUBLIC_KEY}`);
+})
 
 router.post(
   "/create-product",
@@ -52,4 +58,9 @@ router.get("/related-product/:pid/:cid", relatedProductController);
 //  category wise product
 router.get("/product-category/:slug", productCategoryController);
 
+
+//  token 
+router.get("/braintree/token", braintreeTokenController)
+// paymenr
+router.post("/braintree/payment", requireSignIn, braintreePaymentController)
 export default router;
