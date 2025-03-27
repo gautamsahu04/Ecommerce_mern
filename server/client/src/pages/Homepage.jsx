@@ -81,7 +81,7 @@ const Homepage = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `http://localhost:3000/api/product/product-list/${page}`
+        `https://ecommerce-mern-6j9p.onrender.com/api/product/product-list/${page}`
       );
       setLoading(false);
 
