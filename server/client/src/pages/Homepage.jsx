@@ -25,7 +25,7 @@ const Homepage = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `http://localhost:3000/api/product/product-list/${page}`
+        `https://ecommerce-mern-6j9p.onrender.com/api/product/product-list/${page}`
       );
       setLoading(false);
       setProducts([...products, ...data?.products]);
@@ -43,7 +43,7 @@ const Homepage = () => {
   const getTotalCount = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/api/product/count-product"
+        "https://ecommerce-mern-6j9p.onrender.com/api/product/count-product"
       );
       setTotal(data?.total);
     } catch (error) {
@@ -67,7 +67,7 @@ const Homepage = () => {
   const getAllCategories = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/api/category/get-category"
+        "https://ecommerce-mern-6j9p.onrender.com/api/category/get-category"
       );
       if (data?.success) {
         setCategories(data?.Category);
@@ -105,7 +105,7 @@ const Homepage = () => {
   const filterProduct = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/product/filter-product",
+        "https://ecommerce-mern-6j9p.onrender.com/api/product/filter-product",
         {
           checked,
           radio,
@@ -166,7 +166,7 @@ const Homepage = () => {
                   {/* Image Wrapper */}
                   <div className="h-48 w-full">
                     <img
-                      src={`http://localhost:3000/api/product/product-photo/${p._id}`}
+                      src={`https://ecommerce-mern-6j9p.onrender.com/api/product/product-photo/${p._id}`}
                       alt={p.name}
                       className="w-full h-full object-cover rounded-lg"
                     />

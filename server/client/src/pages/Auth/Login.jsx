@@ -16,7 +16,7 @@ const Login = () => {
     // console.log(email,password)
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "https://ecommerce-mern-6j9p.onrender.com/api/auth/login",
         {
           email,
           password,

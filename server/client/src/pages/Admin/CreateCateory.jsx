@@ -22,7 +22,7 @@ const CreateCateory = () => {
     e.preventDefault();
     try {
       const { data } = await axios.put(
-        `http://localhost:3000/api/category/update-category/${editingCategory}`,
+        `https://ecommerce-mern-6j9p.onrender.com/api/category/update-category/${editingCategory}`,
         { name: updatedName }
       );
       if (data.success) {

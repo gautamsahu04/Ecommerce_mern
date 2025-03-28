@@ -18,7 +18,7 @@ const ProductDetail = () => {
   const getOneProduct = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/api/product/single-product/${params.slug}`
+        `https://ecommerce-mern-6j9p.onrender.com/api/product/single-product/${params.slug}`
       );
       setProduct(data?.product);
       getSimilarProducts(data?.product?._id, data?.product?.category?._id);   // categoryId , ProductId
@@ -31,7 +31,7 @@ const ProductDetail = () => {
 const getSimilarProducts = async (pid, cid) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/api/product/related-product/${pid}/${cid}`
+        `https://ecommerce-mern-6j9p.onrender.com/api/product/related-product/${pid}/${cid}`
       );
       setSimilarProducts(data?.products || []);
     } catch (error) {
@@ -46,7 +46,7 @@ const getSimilarProducts = async (pid, cid) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           <div className="flex justify-center">
             <img
-              src={`http://localhost:3000/api/product/product-photo/${product._id}`}
+              src={`https://ecommerce-mern-6j9p.onrender.com/api/product/product-photo/${product._id}`}
               alt={product.name}
               className="w-[350px] h-[300px] object-cover rounded-lg shadow-lg"
             />
@@ -83,7 +83,7 @@ const getSimilarProducts = async (pid, cid) => {
                   {/* Image */}
                   <div className="h-48 w-full">
                     <img
-                      src={`http://localhost:3000/api/product/product-photo/${p._id}`}
+                      src={`https://ecommerce-mern-6j9p.onrender.com/api/product/product-photo/${p._id}`}
                       alt={p.name}
                       className="w-full h-full object-cover rounded-lg"
                     />

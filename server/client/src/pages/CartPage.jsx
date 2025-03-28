@@ -23,7 +23,7 @@ const CartPage = () => {
   const getToken = async (req, res) => {
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/api/product/braintree/token"
+        "https://ecommerce-mern-6j9p.onrender.com/api/product/braintree/token"
       );
       setclientToken(data?.clientToken);
       // console.log(clientToken);

@@ -17,7 +17,7 @@ const Register = () => {
     // console.log(name,email,password,address,phone)
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
+        "https://ecommerce-mern-6j9p.onrender.com/api/auth/register",
         {
           name,
           email,

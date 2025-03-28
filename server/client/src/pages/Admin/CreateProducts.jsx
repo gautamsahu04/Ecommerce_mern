@@ -18,7 +18,7 @@ const CreateProducts = () => {
   // Fetch all categories
   const getAllCategories = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/api/category/get-category");
+      const { data } = await axios.get("https://ecommerce-mern-6j9p.onrender.com/api/category/get-category");
       if (data?.success) {
         setCategories(data.Category);
       }

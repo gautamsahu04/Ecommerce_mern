@@ -22,7 +22,7 @@ const Search = () => {
                 {/* Image Wrapper */}
                 <div className="h-56 w-full overflow-hidden rounded-lg">
                   <img
-                    src={`http://localhost:3000/api/product/product-photo/${p._id}`}
+                    src={`https://ecommerce-mern-6j9p.onrender.com/api/product/product-photo/${p._id}`}
                     alt={p.name}
                     className="w-full h-full object-cover transform hover:scale-105 transition-all duration-300"
                   />

@@ -23,7 +23,7 @@ const UpdateProduct = () => {
   const getSingleProduct = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/api/product/single-product/${params.slug}`
+        `https://ecommerce-mern-6j9p.onrender.com/api/product/single-product/${params.slug}`
       );
       console.log(data);
       if (data?.product) {

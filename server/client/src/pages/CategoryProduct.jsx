@@ -21,7 +21,7 @@ const CategoryProduct = () => {
   const getProductCategory = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/api/product/product-category/${params.slug}`
+        `https://ecommerce-mern-6j9p.onrender.com/api/product/product-category/${params.slug}`
       );
       setCategory(data?.category); // Store category details
       setProduct(data?.products); // Store fetched products
@@ -35,7 +35,7 @@ const CategoryProduct = () => {
     try {
       setLoading(true); // Show loading state
       const { data } = await axios.get(
-        `http://localhost:3000/api/product/product-list/${page}`
+        `https://ecommerce-mern-6j9p.onrender.com/api/product/product-list/${page}`
       );
       setLoading(false);
       setProduct((prevProducts) => [...prevProducts, ...data?.products]); // Append new products to existing list
@@ -48,7 +48,7 @@ const CategoryProduct = () => {
   // Function to get the total count of products
   const getTotalCount = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/api/product/count-product");
+      const { data } = await axios.get("https://ecommerce-mern-6j9p.onrender.com/api/product/count-product");
       setTotal(data?.total); // Store total product count
     } catch (error) {
       console.log(error);
